@@ -1,0 +1,17 @@
+{
+    "name": "yueyifei/geobase",
+    "description": "地理位置库",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "yyf",
+            "email": "yueyifei1995@163.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "GeoBase\\": "src/"
+        }
+    }
+}
