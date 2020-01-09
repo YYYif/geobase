@@ -1,5 +1,10 @@
 ##地理位置库
-
+   
+   ####安装指南以及使用
+   ``composer require yueyifei/geobase``<br>
+   ``use GeoBase\GeoBaseInfo``<br>
+   ``(new GeoBaseInfo())->getAllNation()``<br>
+   
    
    
    ####精确查询
