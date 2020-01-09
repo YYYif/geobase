@@ -1,26 +1,28 @@
 <?php
+
 namespace GeoBase;
+
 use GeoBase\GeoBaseEnum;
+
 class GeoBaseInfo
 {
     protected $_path;
 
     public function __construct()
     {
-        $this->_path = dirname(__FILE__)."/../map/";
+        $this->_path = dirname(__FILE__) . "/../map/";
     }
 
     /**
      * @info 获取全部国家信息 下级仅包括省份ID集合
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getAllNationInfo()
     {
         $filename = GeoBaseEnum::$nationParam['fileName_id'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $content = self::mapRevert2Real(GeoBaseEnum::$_map2Nation_Province, null, $content, true);
-            return $content;
+            return self::mapRevert2Real(GeoBaseEnum::$_map2Nation_Province, null, $content, true);
         } else {
             return false;
         }
@@ -28,15 +30,14 @@ class GeoBaseInfo
 
     /**
      * @info 获取全部省份信息 下级仅包括城市ID集合
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getAllProvinceInfo()
     {
         $filename = GeoBaseEnum::$provinceParam['fileName_id'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $content = self::mapRevert2Real(GeoBaseEnum::$_map2Province_City, null, $content, true);
-            return $content;
+            return self::mapRevert2Real(GeoBaseEnum::$_map2Province_City, null, $content, true);
         } else {
             return false;
         }
@@ -44,15 +45,14 @@ class GeoBaseInfo
 
     /**
      * @info 获取全部城市信息 下级仅包括行政区ID集合
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getAllCityInfo()
     {
         $filename = GeoBaseEnum::$cityParam['fileName_id'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $content = self::mapRevert2Real(GeoBaseEnum::$_map2City_District, null, $content, true);
-            return $content;
+            return self::mapRevert2Real(GeoBaseEnum::$_map2City_District, null, $content, true);
         } else {
             return false;
         }
@@ -60,15 +60,14 @@ class GeoBaseInfo
 
     /**
      * @info 获取全部行政区信息 下级仅包括街道ID集合
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getAllDistrictInfo()
     {
         $filename = GeoBaseEnum::$districtParam['fileName_id'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $content = self::mapRevert2Real(GeoBaseEnum::$_map2District_Street, null, $content, true);
-            return $content;
+            return self::mapRevert2Real(GeoBaseEnum::$_map2District_Street, null, $content, true);
         } else {
             return false;
         }
@@ -76,15 +75,14 @@ class GeoBaseInfo
 
     /**
      * @info 获取全部街道信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getAllStreetInfo()
     {
         $filename = GeoBaseEnum::$streetParam['fileName_id'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $content = self::mapRevert2Real(GeoBaseEnum::$_map2Street, null, $content, true);
-            return $content;
+            return self::mapRevert2Real(GeoBaseEnum::$_map2Street, null, $content, true);
         } else {
             return false;
         }
@@ -94,7 +92,7 @@ class GeoBaseInfo
      * @param int $nationId
      * @return mixed|string
      * @info 根据ID获取国家信息，包括下级省份详细信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getNationById($nationId)
     {
@@ -102,11 +100,11 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$nationParam['fileName_id'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $nationInfo = $this->executeContent($content, $nationId, GeoBaseEnum::map2Param(GeoBaseEnum::PROVINCE_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::PROVINCE_NAME), GeoBaseEnum::$nationParam['childFileName'], GeoBaseEnum::$_map2Nation_Province, GeoBaseEnum::$_map2Province_City);
-
-            return $nationInfo;
+            return $this->executeContent($content, $nationId, GeoBaseEnum::map2Param(GeoBaseEnum::PROVINCE_IDS),
+                GeoBaseEnum::map2Param(GeoBaseEnum::PROVINCE_NAME), GeoBaseEnum::$nationParam['childFileName'],
+                GeoBaseEnum::$_map2Nation_Province, GeoBaseEnum::$_map2Province_City);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -118,14 +116,14 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
 
-        $filename = GeoBaseEnum::$nationParam['fileName_id'];
-        $content = $this->getOffLineGeoText($filename);
+        $filename          = GeoBaseEnum::$nationParam['fileName_id'];
+        $content           = $this->getOffLineGeoText($filename);
         $mapMobileAreaCode = GeoBaseEnum::param2MapWithType(GeoBaseEnum::MOBILE_AREA_CODE);
-        $mapNationId = GeoBaseEnum::param2MapWithType(GeoBaseEnum::ID);
+        $mapNationId       = GeoBaseEnum::param2MapWithType(GeoBaseEnum::ID);
 
         $result = [];
         foreach ($content as $item) {
-            if (!isset($item[$mapMobileAreaCode]) || !isset($item[$mapNationId]) ||$item[$mapMobileAreaCode] != $mobileAreaCode) {
+            if (!isset($item[$mapMobileAreaCode]) || !isset($item[$mapNationId]) || $item[$mapMobileAreaCode] != $mobileAreaCode) {
                 continue;
             }
             $result[] = $this->getNationById($item[$mapNationId]);
@@ -138,7 +136,7 @@ class GeoBaseInfo
      * @param string $nationName
      * @return mixed|string
      * @info 根据名称获取国家信息，包括下级省份详细信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getNationByName($nationName)
     {
@@ -146,10 +144,11 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$nationParam['fileName_name'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $nationInfo = $this->executeContent($content, $nationName, GeoBaseEnum::map2Param(GeoBaseEnum::PROVINCE_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::PROVINCE_NAME), GeoBaseEnum::$nationParam['childFileName'], GeoBaseEnum::$_map2Nation_Province, GeoBaseEnum::$_map2Province_City);
-            return $nationInfo;
+            return $this->executeContent($content, $nationName, GeoBaseEnum::map2Param(GeoBaseEnum::PROVINCE_IDS),
+                GeoBaseEnum::map2Param(GeoBaseEnum::PROVINCE_NAME), GeoBaseEnum::$nationParam['childFileName'],
+                GeoBaseEnum::$_map2Nation_Province, GeoBaseEnum::$_map2Province_City);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -159,7 +158,7 @@ class GeoBaseInfo
      * @param int $nationStandardCode
      * @return mixed|string
      * @info 根据国家编码获取国家信息，包括下级省份详细信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getNationByStandardCode($nationStandardCode)
     {
@@ -167,10 +166,12 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$nationParam['fileName_standardCode'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $nationInfo = $this->executeContent($content, $nationStandardCode, GeoBaseEnum::map2Param(GeoBaseEnum::PROVINCE_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::PROVINCE_NAME), GeoBaseEnum::$nationParam['childFileName'], GeoBaseEnum::$_map2Nation_Province, GeoBaseEnum::$_map2Province_City);
-            return $nationInfo;
+            return $this->executeContent($content, $nationStandardCode,
+                GeoBaseEnum::map2Param(GeoBaseEnum::PROVINCE_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::PROVINCE_NAME),
+                GeoBaseEnum::$nationParam['childFileName'], GeoBaseEnum::$_map2Nation_Province,
+                GeoBaseEnum::$_map2Province_City);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -180,7 +181,7 @@ class GeoBaseInfo
      * @param int $provinceId
      * @return mixed|string
      * @info 根据省份ID获取省份信息，包括下级城市详细信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getProvinceById($provinceId)
     {
@@ -188,10 +189,11 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$provinceParam['fileName_id'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $provinceInfo = $this->executeContent($content, $provinceId, GeoBaseEnum::map2Param(GeoBaseEnum::CITY_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::CITY_NAME), GeoBaseEnum::$provinceParam['childFileName'], GeoBaseEnum::$_map2Province_City, GeoBaseEnum::$_map2City_District);
-            return $provinceInfo;
+            return $this->executeContent($content, $provinceId, GeoBaseEnum::map2Param(GeoBaseEnum::CITY_IDS),
+                GeoBaseEnum::map2Param(GeoBaseEnum::CITY_NAME), GeoBaseEnum::$provinceParam['childFileName'],
+                GeoBaseEnum::$_map2Province_City, GeoBaseEnum::$_map2City_District);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -201,7 +203,7 @@ class GeoBaseInfo
      * @param string $provinceName
      * @return mixed|string
      * @info 根据省份名称获取省份信息，包括下级城市详细信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getProvinceByName($provinceName)
     {
@@ -209,10 +211,11 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$provinceParam['fileName_name'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $provinceInfo = $this->executeContent($content, $provinceName, GeoBaseEnum::map2Param(GeoBaseEnum::CITY_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::CITY_NAME), GeoBaseEnum::$provinceParam['childFileName'], GeoBaseEnum::$_map2Province_City, GeoBaseEnum::$_map2City_District);
-            return $provinceInfo;
+            return $this->executeContent($content, $provinceName, GeoBaseEnum::map2Param(GeoBaseEnum::CITY_IDS),
+                GeoBaseEnum::map2Param(GeoBaseEnum::CITY_NAME), GeoBaseEnum::$provinceParam['childFileName'],
+                GeoBaseEnum::$_map2Province_City, GeoBaseEnum::$_map2City_District);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -222,7 +225,7 @@ class GeoBaseInfo
      * @param int $standardCode
      * @return mixed|string
      * @info 根据省份编码获取省份信息，包括下级城市详细信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getProvinceByStandardCode($standardCode)
     {
@@ -230,10 +233,11 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$provinceParam['fileName_standardCode'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $provinceInfo = $this->executeContent($content, $standardCode, GeoBaseEnum::map2Param(GeoBaseEnum::CITY_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::CITY_NAME), GeoBaseEnum::$provinceParam['childFileName'], GeoBaseEnum::$_map2Province_City, GeoBaseEnum::$_map2City_District);
-            return $provinceInfo;
+            return $this->executeContent($content, $standardCode, GeoBaseEnum::map2Param(GeoBaseEnum::CITY_IDS),
+                GeoBaseEnum::map2Param(GeoBaseEnum::CITY_NAME), GeoBaseEnum::$provinceParam['childFileName'],
+                GeoBaseEnum::$_map2Province_City, GeoBaseEnum::$_map2City_District);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -243,7 +247,7 @@ class GeoBaseInfo
      * @param int $cityId
      * @return mixed|string
      * @info 根据城市ID获取城市信息，包括下级行政区详细信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getCityById($cityId)
     {
@@ -251,10 +255,11 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$cityParam['fileName_id'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $cityInfo = $this->executeContent($content, $cityId, GeoBaseEnum::map2Param(GeoBaseEnum::DISTRICT_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::DISTRICT_NAME), GeoBaseEnum::$cityParam['childFileName'], GeoBaseEnum::$_map2City_District, GeoBaseEnum::$_map2District_Street);
-            return $cityInfo;
+            return $this->executeContent($content, $cityId, GeoBaseEnum::map2Param(GeoBaseEnum::DISTRICT_IDS),
+                GeoBaseEnum::map2Param(GeoBaseEnum::DISTRICT_NAME), GeoBaseEnum::$cityParam['childFileName'],
+                GeoBaseEnum::$_map2City_District, GeoBaseEnum::$_map2District_Street);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -264,7 +269,7 @@ class GeoBaseInfo
      * @param string $cityName
      * @return mixed|string
      * @info 根据城市全名称获取城市信息，包括下级行政区详细信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getCityByName($cityName)
     {
@@ -272,10 +277,11 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$cityParam['fileName_name'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $cityInfo = $this->executeContent($content, $cityName, GeoBaseEnum::map2Param(GeoBaseEnum::DISTRICT_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::DISTRICT_NAME), GeoBaseEnum::$cityParam['childFileName'], GeoBaseEnum::$_map2City_District, GeoBaseEnum::$_map2District_Street);
-            return $cityInfo;
+            return $this->executeContent($content, $cityName, GeoBaseEnum::map2Param(GeoBaseEnum::DISTRICT_IDS),
+                GeoBaseEnum::map2Param(GeoBaseEnum::DISTRICT_NAME), GeoBaseEnum::$cityParam['childFileName'],
+                GeoBaseEnum::$_map2City_District, GeoBaseEnum::$_map2District_Street);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -285,7 +291,7 @@ class GeoBaseInfo
      * @param int $standardCode
      * @return mixed|string
      * @info 根据城市编码获取城市信息，包括下级行政区详细信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getCityByStandardCode($standardCode)
     {
@@ -293,10 +299,11 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$cityParam['fileName_standardCode'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $cityInfo = $this->executeContent($content, $standardCode, GeoBaseEnum::map2Param(GeoBaseEnum::DISTRICT_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::DISTRICT_NAME), GeoBaseEnum::$cityParam['childFileName'], GeoBaseEnum::$_map2City_District, GeoBaseEnum::$_map2District_Street);
-            return $cityInfo;
+            return $this->executeContent($content, $standardCode, GeoBaseEnum::map2Param(GeoBaseEnum::DISTRICT_IDS),
+                GeoBaseEnum::map2Param(GeoBaseEnum::DISTRICT_NAME), GeoBaseEnum::$cityParam['childFileName'],
+                GeoBaseEnum::$_map2City_District, GeoBaseEnum::$_map2District_Street);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -306,7 +313,7 @@ class GeoBaseInfo
      * @param int $districtId
      * @return mixed|string
      * @info 根据行政区ID获取行政区信息，包括下级街道详细信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getDistrictById($districtId)
     {
@@ -314,10 +321,11 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$districtParam['fileName_id'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $districtInfo = $this->executeContent($content, $districtId, GeoBaseEnum::map2Param(GeoBaseEnum::STREET_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::STREET_NAME), GeoBaseEnum::$districtParam['childFileName'], GeoBaseEnum::$_map2District_Street, GeoBaseEnum::$_map2Street);
-            return $districtInfo;
+            return $this->executeContent($content, $districtId, GeoBaseEnum::map2Param(GeoBaseEnum::STREET_IDS),
+                GeoBaseEnum::map2Param(GeoBaseEnum::STREET_NAME), GeoBaseEnum::$districtParam['childFileName'],
+                GeoBaseEnum::$_map2District_Street, GeoBaseEnum::$_map2Street);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -327,7 +335,7 @@ class GeoBaseInfo
      * @param string $districtName
      * @return mixed|string
      * @info 根据行政区名称获取行政区信息，包括下级街道详细信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getDistrictByName($districtName)
     {
@@ -335,10 +343,11 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$districtParam['fileName_name'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $districtInfo = $this->executeContent($content, $districtName, GeoBaseEnum::map2Param(GeoBaseEnum::STREET_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::STREET_NAME), GeoBaseEnum::$districtParam['childFileName'], GeoBaseEnum::$_map2District_Street, GeoBaseEnum::$_map2Street);
-            return $districtInfo;
+            return $this->executeContent($content, $districtName, GeoBaseEnum::map2Param(GeoBaseEnum::STREET_IDS),
+                GeoBaseEnum::map2Param(GeoBaseEnum::STREET_NAME), GeoBaseEnum::$districtParam['childFileName'],
+                GeoBaseEnum::$_map2District_Street, GeoBaseEnum::$_map2Street);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -348,7 +357,7 @@ class GeoBaseInfo
      * @param string $standardCode
      * @return mixed|string
      * @info 根据行政区编码获取行政区信息，包括下级街道详细信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getDistrictByStandardCode($standardCode)
     {
@@ -356,10 +365,11 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$districtParam['fileName_standardCode'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $districtInfo = $this->executeContent($content, $standardCode, GeoBaseEnum::map2Param(GeoBaseEnum::STREET_IDS), GeoBaseEnum::map2Param(GeoBaseEnum::STREET_NAME), GeoBaseEnum::$districtParam['childFileName'], GeoBaseEnum::$_map2District_Street, GeoBaseEnum::$_map2Street);
-            return $districtInfo;
+            return $this->executeContent($content, $standardCode, GeoBaseEnum::map2Param(GeoBaseEnum::STREET_IDS),
+                GeoBaseEnum::map2Param(GeoBaseEnum::STREET_NAME), GeoBaseEnum::$districtParam['childFileName'],
+                GeoBaseEnum::$_map2District_Street, GeoBaseEnum::$_map2Street);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -369,7 +379,7 @@ class GeoBaseInfo
      * @param int $streetId
      * @return mixed|string
      * @info 根据街道ID获取街道信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getStreetById($streetId)
     {
@@ -377,10 +387,9 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$streetParam['fileName_id'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $streetInfo = $this->executeContent($content, $streetId, null, null, null, GeoBaseEnum::$_map2Street, null);
-            return $streetInfo;
+            return $this->executeContent($content, $streetId, null, null, null, GeoBaseEnum::$_map2Street, null);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -390,7 +399,7 @@ class GeoBaseInfo
      * @param string $streetName
      * @return mixed|string
      * @info 根据街道名称获取街道信息
-     * @author yueyifei@xiaozhu.com
+     * @author yueyifei1995@163.com
      */
     public function getStreetByName($streetName)
     {
@@ -398,10 +407,9 @@ class GeoBaseInfo
             return GeoBaseEnum::LACK_PARAMS;
         }
         $filename = GeoBaseEnum::$streetParam['fileName_name'];
-        $content = $this->getOffLineGeoText($filename);
+        $content  = $this->getOffLineGeoText($filename);
         if (!empty($content)) {
-            $streetInfo = $this->executeContent($content, $streetName, null, null, null, GeoBaseEnum::$_map2Street, null);
-            return $streetInfo;
+            return $this->executeContent($content, $streetName, null, null, null, GeoBaseEnum::$_map2Street, null);
         } else {
             return GeoBaseEnum::RESULT_NULL;
         }
@@ -415,11 +423,11 @@ class GeoBaseInfo
      * @param bool $ifSelectAll
      * @return array
      */
-     private function mapRevert2Real($mapParent, $mapChild, $initialData, $ifSelectAll = false)
-     {
-        $result = array();
+    private function mapRevert2Real($mapParent, $mapChild, $initialData, $ifSelectAll = false)
+    {
+        $result   = array();
         $tempData = array();
-        $subData = array();
+        $subData  = array();
         if (empty($initialData)) {
             return [];
         }
@@ -434,11 +442,10 @@ class GeoBaseInfo
             }
         } else {
             //精确查询父级对应所有下级
-            foreach ($initialData as $parentKey => $parentVal){
+            foreach ($initialData as $parentKey => $parentVal) {
                 if ($parentKey == 'belong_infos') {
-                    foreach ($parentVal as $originalKey => $originalChildVal)
-                    {
-                        foreach ($originalChildVal as $childKey => $childVal){
+                    foreach ($parentVal as $originalKey => $originalChildVal) {
+                        foreach ($originalChildVal as $childKey => $childVal) {
                             $tempData[$mapChild[$childKey]] = $childVal;
                         }
                         //将所属下级结果中的key替换为子级名称显示
@@ -452,7 +459,7 @@ class GeoBaseInfo
             }
         }
         return $result;
-     }
+    }
 
     /**
      * 接收文本数据，依照父子级关系，得到对应父级详细信息以及对应所有子集信息
@@ -476,15 +483,13 @@ class GeoBaseInfo
         if (isset($parentInfo[$childIdIndex]) && !empty($parentInfo[$childIdIndex])) {
             $childArr = explode(',', $parentInfo[$childIdIndex]);
             foreach ($childArr as $value) {
-                $childRes = $this->getOffLineGeoText($childFileName);
-                $childInfo = $childRes[$value];
+                $childRes                                           = $this->getOffLineGeoText($childFileName);
+                $childInfo                                          = $childRes[$value];
                 $parentInfo['belong_infos'][$childInfo[$childName]] = $childInfo;
             }
-            $parentInfo = self::mapRevert2Real($mapParent, $mapChild, $parentInfo);
-            return $parentInfo;
+            return self::mapRevert2Real($mapParent, $mapChild, $parentInfo);
         } else {
-            $parentInfo = self::mapRevert2Real($mapParent, $mapChild, $parentInfo);
-            return $parentInfo;
+            return self::mapRevert2Real($mapParent, $mapChild, $parentInfo);
         }
     }
 
@@ -495,11 +500,10 @@ class GeoBaseInfo
      */
     private function getOffLineGeoText($fileName)
     {
-        $path = $this->_path.$fileName.'.json';
+        $path = $this->_path . $fileName . '.json';
         if (file_exists($path)) {
             $data = file_get_contents($path);
-            $data = json_decode($data , true);
-            return $data;
+            return json_decode($data, true);
         } else {
             return false;
         }
