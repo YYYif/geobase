@@ -90,7 +90,7 @@ class GeoBaseInfo
 
     /**
      * @param int $nationId
-     * @return mixed|string
+     * @return array|string
      * @info 根据ID获取国家信息，包括下级省份详细信息
      * @author yueyifei1995@163.com
      */
@@ -134,7 +134,7 @@ class GeoBaseInfo
 
     /**
      * @param string $nationName
-     * @return mixed|string
+     * @return array|string
      * @info 根据名称获取国家信息，包括下级省份详细信息
      * @author yueyifei1995@163.com
      */
@@ -156,7 +156,7 @@ class GeoBaseInfo
 
     /**
      * @param int $nationStandardCode
-     * @return mixed|string
+     * @return array|string
      * @info 根据国家编码获取国家信息，包括下级省份详细信息
      * @author yueyifei1995@163.com
      */
@@ -179,7 +179,7 @@ class GeoBaseInfo
 
     /**
      * @param int $provinceId
-     * @return mixed|string
+     * @return array|string
      * @info 根据省份ID获取省份信息，包括下级城市详细信息
      * @author yueyifei1995@163.com
      */
@@ -201,7 +201,7 @@ class GeoBaseInfo
 
     /**
      * @param string $provinceName
-     * @return mixed|string
+     * @return array|string
      * @info 根据省份名称获取省份信息，包括下级城市详细信息
      * @author yueyifei1995@163.com
      */
@@ -223,7 +223,7 @@ class GeoBaseInfo
 
     /**
      * @param int $standardCode
-     * @return mixed|string
+     * @return array|string
      * @info 根据省份编码获取省份信息，包括下级城市详细信息
      * @author yueyifei1995@163.com
      */
@@ -245,7 +245,7 @@ class GeoBaseInfo
 
     /**
      * @param int $cityId
-     * @return mixed|string
+     * @return array|string
      * @info 根据城市ID获取城市信息，包括下级行政区详细信息
      * @author yueyifei1995@163.com
      */
@@ -267,7 +267,7 @@ class GeoBaseInfo
 
     /**
      * @param string $cityName
-     * @return mixed|string
+     * @return array|string
      * @info 根据城市全名称获取城市信息，包括下级行政区详细信息
      * @author yueyifei1995@163.com
      */
@@ -289,7 +289,7 @@ class GeoBaseInfo
 
     /**
      * @param int $standardCode
-     * @return mixed|string
+     * @return array|string
      * @info 根据城市编码获取城市信息，包括下级行政区详细信息
      * @author yueyifei1995@163.com
      */
@@ -311,7 +311,7 @@ class GeoBaseInfo
 
     /**
      * @param int $districtId
-     * @return mixed|string
+     * @return array|string
      * @info 根据行政区ID获取行政区信息，包括下级街道详细信息
      * @author yueyifei1995@163.com
      */
@@ -333,7 +333,7 @@ class GeoBaseInfo
 
     /**
      * @param string $districtName
-     * @return mixed|string
+     * @return array|string
      * @info 根据行政区名称获取行政区信息，包括下级街道详细信息
      * @author yueyifei1995@163.com
      */
@@ -355,7 +355,7 @@ class GeoBaseInfo
 
     /**
      * @param string $standardCode
-     * @return mixed|string
+     * @return array|string
      * @info 根据行政区编码获取行政区信息，包括下级街道详细信息
      * @author yueyifei1995@163.com
      */
@@ -377,7 +377,7 @@ class GeoBaseInfo
 
     /**
      * @param int $streetId
-     * @return mixed|string
+     * @return array|string
      * @info 根据街道ID获取街道信息
      * @author yueyifei1995@163.com
      */
@@ -397,7 +397,7 @@ class GeoBaseInfo
 
     /**
      * @param string $streetName
-     * @return mixed|string
+     * @return array|string
      * @info 根据街道名称获取街道信息
      * @author yueyifei1995@163.com
      */
@@ -470,7 +470,7 @@ class GeoBaseInfo
      * @param string $childFileName
      * @param array $mapParent
      * @param array $mapChild
-     * @return mixed
+     * @return array
      */
     private function executeContent($content, $param, $childIdIndex, $childName, $childFileName, $mapParent, $mapChild)
     {
@@ -496,7 +496,7 @@ class GeoBaseInfo
     /**
      * 接收文本名，取出对应文本中存储信息
      * @param string $fileName
-     * @return mixed
+     * @return array|bool
      */
     private function getOffLineGeoText($fileName)
     {
